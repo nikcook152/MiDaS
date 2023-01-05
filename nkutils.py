@@ -9,6 +9,19 @@ def plot_depth(path, depth):
     depth = np.rot90(depth)
     depth = np.rot90(depth)
     #depth = np.transpose(depth)
+    #print(depth)
+    x_max=len(depth)
+    y_max=len(depth[0])
+    print(x_max)
+    print(y_max)
+    borders = np.zeros((x_max, y_max))
+    for x in range(5, y_max-5):
+        for y in range(5, x_max-5):
+            #print(x,y)
+            #print(depth[y][x])
+            difference = abs(depth[y][x]-depth[y][x-5])+abs(depth[y][x]-depth[y][x+5])+abs(depth[y][x]-depth[y][x-5])
+
+
     depth_flat = []
     for item in depth:
         for subitem in item:
