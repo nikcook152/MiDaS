@@ -4,6 +4,7 @@ import os
 import glob
 import torch
 import utils
+import nkutils
 import cv2
 import argparse
 import time
@@ -160,7 +161,8 @@ def run(input_path, output_path, model_path, model_type="dpt_beit_large_512", op
                     output_path, os.path.splitext(os.path.basename(image_name))[0] + '-' + model_type
                 )
                 if not side:
-                    utils.write_depth(filename, prediction, grayscale, bits=2)
+                    #utils.write_depth(filename, prediction, grayscale, bits=2)
+                    nkutils.plot_depth(filename, prediction)
                 else:
                     original_image_bgr = np.flip(original_image_rgb, 2)
                     content = create_side_by_side(original_image_bgr*255, prediction, grayscale)
