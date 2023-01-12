@@ -61,6 +61,28 @@ def plot_depth(path, depth):
     plt.scatter(x_flat, y_flat, c=depth_flat, s=0.01)
     plt.savefig('scatter.png')
 
+    d = pd.DataFrame(np.zeros((y_max, x_max)))
+    for x in range(5, x_max-5):
+        for y in range(5, y_max-5):
+            left = abs(depth[x][y] - depth[x-5][y])
+            right = abs(depth[x][y] - depth[x+5][y])
+            up = abs(depth[x][y] - depth[x][y-5])
+            down = abs(depth[x][y] - depth[x][y+5])
+            d[x][y] = left + right + up + down
+    #d = np.rot90(d)
+    max_d = d.max().max()*0.2
+    print(max_d)
+    d[d < max_d] = 0
+    d[d > max_d] = 1
+    d = d.transpose()
+    print(d.shape)
+    pd.DataFrame(d).to_csv("d.csv")
+    d_flat = d.to_numpy().flatten()
+    plt.clf()
+    plt.scatter(x_flat, y_flat, c=d_flat, s=0.01)
+    plt.savefig('scatter_d.png')
     
-
+    #for x in range(5, x_max-5):
+    #    for y in range(5, y_max-5):
+    #        if d[x][y] < 
     return
